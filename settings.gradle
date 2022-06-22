@@ -1,0 +1,2 @@
+rootProject.name = "Kali Tidi"
+include ':app'
