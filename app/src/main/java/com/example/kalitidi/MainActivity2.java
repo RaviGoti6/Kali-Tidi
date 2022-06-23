@@ -38,6 +38,7 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
     int points1 = 0, points2 = 0, points3 = 0, points4 = 0, points5 = 0, points6 = 0, points7 = 0, points8 = 0;
     String partner1, partner2, partner3;
     String id, Players;
+    long iid;
     Integer points;
     //String[] items;
     ArrayList<String> items;
@@ -165,6 +166,7 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //Toast.makeText(MainActivity2.this, "Selected ID=" + id, Toast.LENGTH_LONG).show();
+                iid = id;
                 Cursor value = (Cursor) dropdown.getItemAtPosition(position);
                 CaptainName = value.getString(value.getColumnIndex("PlayerName"));
                 txtCaptainNameText.setText(CaptainName);
@@ -341,38 +343,74 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
                 partner2 = null;
                 partner3 = null;
                 CaptainName = null;
-                //Intent intent = getIntent();
-                //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                //finish();
-                //startActivity(intent);
+                //points = 0;
+                Intent intent = getIntent();
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                startActivity(intent);
+                // points = player.getPoints();
             }
         });
 
         btnLoss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loss();
+                losss();
                 partner1 = null;
                 partner2 = null;
                 partner3 = null;
                 CaptainName = null;
+                //points = 0;
+                Intent intent = getIntent();
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                startActivity(intent);
             }
         });
-
     }
 
     public void wonn() {
-
         //Cursor c1 = db.selectPlayerData();
         bid = Integer.parseInt(String.valueOf(edtBidAmount.getText()));
         CaptainName = String.valueOf(txtCaptainNameText.getText());
-        Integer P = player.getPoints();
-        P = P + 2 * bid;
+        Cursor c1 = db.selectPlayerData();
+        if (c1.getCount() > 0) {
+            while (c1.moveToNext()) {
+                id = c1.getString(c1.getColumnIndex("id"));
+                Players = c1.getString(c1.getColumnIndex("PlayerName"));
+                points = c1.getInt(c1.getColumnIndex("Points"));
+            }
+        }
+        //Integer P = player.getPoints();
+        points = points + 2 * bid;
+        // player.setPoints(points);
+        Log.e("TAG", String.valueOf(points));
+        boolean b1 = db.updatePlayerData(String.valueOf(iid), CaptainName, points);
+        if (b1 == true) {
+            Toast.makeText(MainActivity2.this, "Data Updated....", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        Log.e("TAG", String.valueOf(P));
-        boolean b1 = db.updatePlayerData(CaptainName, P);
-
-
+    public void losss() {
+        //Cursor c1 = db.selectPlayerData();
+        bid = Integer.parseInt(String.valueOf(edtBidAmount.getText()));
+        CaptainName = String.valueOf(txtCaptainNameText.getText());
+        Cursor c1 = db.selectPlayerData();
+        if (c1.getCount() > 0) {
+            while (c1.moveToNext()) {
+                id = c1.getString(c1.getColumnIndex("id"));
+                Players = c1.getString(c1.getColumnIndex("PlayerName"));
+                points = c1.getInt(c1.getColumnIndex("Points"));
+            }
+        }
+        //Integer P = player.getPoints();
+        points = points - bid;
+        // player.setPoints(points);
+        Log.e("TAG", String.valueOf(points));
+        boolean b1 = db.updatePlayerData(String.valueOf(iid), CaptainName, points);
+        if (b1 == true) {
+            Toast.makeText(MainActivity2.this, "Data Updated....", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -1834,14 +1872,14 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
 
         public Cursor selectPlayerData() {
             SQLiteDatabase db = this.getWritableDatabase();
-            Cursor c1 = db.rawQuery("select * from player where id = '" + id + "'", null);
+            Cursor c1 = db.rawQuery("select * from player where id = '" + iid + "'", null);
             return c1;
         }
 
-        public boolean updatePlayerData(String playerName, int points) {
+        public boolean updatePlayerData(String Id, String playerName, int points) {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues cv = new ContentValues();
-            String updateQ = "update player set Points='" + points + "',where PlayerName='" + playerName + "'";
+            String updateQ = "update player set Points='" + points + "' where PlayerName='" + playerName + "' and id = '" + Id + "'";
             db.execSQL(updateQ);
             return true;
         }
