@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     String player1Name = null, player2Name = null, player3Name = null, player4Name = null, player5Name = null, player6Name = null, player7Name = null, player8Name = null;
     ApplicationManager applicationManager;
     dbHelper dh;
+    Integer points = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         edtPlayer8.setVisibility(View.INVISIBLE);
 
         dh = new dbHelper(this);
+        applicationManager = new ApplicationManager(getApplicationContext());
+
 
         //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.players);
@@ -157,6 +160,44 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // TODO Auto-generated method stub
     }
 
+
+    public static class dbHelper extends SQLiteOpenHelper {
+
+        public static final String Databasename = "kali2.db";
+
+        public dbHelper(Context context) {
+            super(context, Databasename, null, 1);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL("create table player(id INTEGER PRIMARY KEY AUTOINCREMENT, PlayerName text, Points text)");
+
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
+
+        public boolean insertData(String PlayerName, int Points) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+            cv.put("PlayerName", PlayerName);
+            cv.put("Points", Points);
+
+            long rs = db.insert("player", null, cv);
+            if (rs == -1) {
+                return false;
+            } else {
+                return true;
+            }
+
+        }
+
+
+    }
+
     public void submit() {
 
         player1Name = String.valueOf(edtPlayer1.getText());
@@ -180,28 +221,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         boolean result, result1, result2, result3, result4, result5, result6, result7;
 
         if (!player1Name.equals("")) {
-            result = dh.insertData(player1Name);
+            result = dh.insertData(player1Name, points);
         }
         if (!player2Name.equals("")) {
-            result1 = dh.insertData(player2Name);
+            result1 = dh.insertData(player2Name, points);
         }
         if (!player3Name.equals("")) {
-            result2 = dh.insertData(player3Name);
+            result2 = dh.insertData(player3Name, points);
         }
         if (!player4Name.equals("")) {
-            result3 = dh.insertData(player4Name);
+            result3 = dh.insertData(player4Name, points);
         }
         if (!player5Name.equals("")) {
-            result4 = dh.insertData(player5Name);
+            result4 = dh.insertData(player5Name, points);
         }
         if (!player6Name.equals("")) {
-            result5 = dh.insertData(player6Name);
+            result5 = dh.insertData(player6Name, points);
         }
         if (!player7Name.equals("")) {
-            result6 = dh.insertData(player7Name);
+            result6 = dh.insertData(player7Name, points);
         }
         if (!player8Name.equals("")) {
-            result7 = dh.insertData(player8Name);
+            result7 = dh.insertData(player8Name, points);
         }
 
         if ((result = true) || (result2 = true) || (result3 = true) || (result4 = true) || (result5 = true) || (result6 = true) || (result7 = true)) {
@@ -215,54 +256,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toast.makeText(MainActivity.this, "Enter Player Name", Toast.LENGTH_SHORT).show();
     }*/
 
-    Intent i = new Intent(MainActivity.this, MainActivity2.class);
-        i.putExtra("Player1",player1Name);
-        i.putExtra("Player2",player2Name);
-        i.putExtra("Player3",player3Name);
-        i.putExtra("Player4",player4Name);
-        i.putExtra("Player5",player5Name);
-        i.putExtra("Player6",player6Name);
-        i.putExtra("Player7",player7Name);
-        i.putExtra("Player8",player8Name);
+        Intent i = new Intent(MainActivity.this, MainActivity2.class);
+        // i.putExtra("Player1", player1Name);
+        // i.putExtra("Player2", player2Name);
+        // i.putExtra("Player3", player3Name);
+        // i.putExtra("Player4", player4Name);
+        //i.putExtra("Player5", player5Name);
+        //i.putExtra("Player6", player6Name);
+        //i.putExtra("Player7", player7Name);
+        //i.putExtra("Player8", player8Name);
 
-    startActivity(i);
-}
-
-public static class dbHelper extends SQLiteOpenHelper {
-
-    public static final String Databasename = "kali1.db";
-
-    public dbHelper(Context context) {
-        super(context, Databasename, null, 1);
+        startActivity(i);
     }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table player(Id INTEGER PRIMARY KEY AUTOINCREMENT, PlayerName text, Points text)");
-
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    }
-
-    public boolean insertData(String PlayerName) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("PlayerName", PlayerName);
-
-        long rs = db.insert("player", null, cv);
-        if (rs == -1) {
-            return false;
-        } else {
-            return true;
-        }
-
-    }
-
-
-}
 
 
 }

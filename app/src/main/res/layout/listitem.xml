@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/lnly"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Id"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/txtplayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="player:"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/txtPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="0"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+    <!--
+          <TextView
+              android:id="@+id/txtplayer2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="player2:"
+              android:textSize="20dp"
+              android:layout_marginTop="5dp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/txtplayer1" />
+
+        <TextView
+            android:id="@+id/txtPoints2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="0"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtplayer2"
+            app:layout_constraintTop_toBottomOf="@+id/txtPoints1" />
+
+          <TextView
+              android:id="@+id/txtplayer3"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="player3:"
+              android:textSize="20dp"
+              android:layout_marginTop="5dp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/txtplayer2" />
+
+        <TextView
+            android:id="@+id/txtPoints3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="0"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtplayer3"
+            app:layout_constraintTop_toBottomOf="@+id/txtPoints2" />
+
+          <TextView
+              android:id="@+id/txtplayer4"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="player4:"
+              android:textSize="20dp"
+              android:layout_marginTop="5dp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/txtplayer3" />
+
+        <TextView
+            android:id="@+id/txtPoints4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="0"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtplayer4"
+            app:layout_constraintTop_toBottomOf="@+id/txtPoints3" />
+
+          <TextView
+              android:id="@+id/txtplayer5"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="player5:"
+              android:textSize="20dp"
+              android:layout_marginTop="5dp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/txtplayer4" />
+
+        <TextView
+            android:id="@+id/txtPoints5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="0"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtplayer5"
+            app:layout_constraintTop_toBottomOf="@+id/txtPoints4" />
+
+          <TextView
+              android:id="@+id/txtplayer6"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="player6:"
+              android:textSize="20dp"
+              android:layout_marginTop="5dp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/txtplayer5" />
+
+        <TextView
+            android:id="@+id/txtPoints6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="0"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtplayer6"
+            app:layout_constraintTop_toBottomOf="@+id/txtPoints5" />
+
+        <TextView
+            android:id="@+id/txtplayer7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtplayer6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="player7:"
+            android:textSize="20dp"
+            android:layout_marginTop="5dp"
+            tools:layout_editor_absoluteX="153dp"
+            tools:layout_editor_absoluteY="402dp" />
+
+        <TextView
+            android:id="@+id/txtPoints7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="0"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtplayer7"
+            app:layout_constraintTop_toBottomOf="@+id/txtPoints6" />
+
+        <TextView
+            android:id="@+id/txtplayer8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtplayer7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="player8:"
+            android:textSize="20dp"
+            android:layout_marginTop="5dp"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="389dp" />
+
+        <TextView
+            android:id="@+id/txtPoints8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="0"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtplayer8"
+            app:layout_constraintTop_toBottomOf="@+id/txtPoints7" />
+         -->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

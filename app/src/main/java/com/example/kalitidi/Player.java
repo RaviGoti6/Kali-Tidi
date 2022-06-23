@@ -4,35 +4,35 @@ public class Player {
 
     public String Id;
     public String PlayerName;
-    public String Points;
+    public Integer Points;
 
-    public Player(String id, String playerName) {
-        Id = id;
-        PlayerName = playerName;
-        //Points = points;
+    public Player(String Id, String PlayerName, Integer Points) {
+        this.Id = Id;
+        this.PlayerName = PlayerName;
+        this.Points = Points;
     }
 
     public String getId() {
         return Id;
     }
 
-    public void setId(String id) {
-        Id = id;
+    public void setId(String Id) {
+        Id = Id;
     }
 
     public String getPlayerName() {
         return PlayerName;
     }
 
-    public void setPlayerName(String playerName) {
-        PlayerName = playerName;
+    public void setPlayerName(String PlayerName) {
+        PlayerName = PlayerName;
     }
 
-    public String getPoints() {
+    public Integer getPoints() {
         return Points;
     }
 
-    public void setPoints(String points) {
-        Points = points;
+    public void setPoints(Integer Points) {
+        Points = Points;
     }
 }

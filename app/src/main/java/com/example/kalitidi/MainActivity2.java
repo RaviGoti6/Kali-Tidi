@@ -3,6 +3,7 @@ package com.example.kalitidi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,8 +37,11 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
     String player1 = "", player2 = "", player3 = "", player4 = "", player5 = "", player6 = "", player7 = "", player8 = "";
     int points1 = 0, points2 = 0, points3 = 0, points4 = 0, points5 = 0, points6 = 0, points7 = 0, points8 = 0;
     String partner1, partner2, partner3;
+    String id, Players;
+    Integer points;
     //String[] items;
     ArrayList<String> items;
+    Player player;
 
     int bid;
     String CaptainName;
@@ -54,10 +59,15 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
         btnWon = (Button) findViewById(R.id.btnWon);
         btnLoss = (Button) findViewById(R.id.btnLoss);
 
+        ListView listView = (ListView) findViewById(R.id.lvPlayer);
+
         db = new dbHelper(this);
 
         edtBidAmount = (EditText) findViewById(R.id.edtBidAmount);
 
+        player = new Player(id, Players, points);
+
+        /*
         txtPlayer1 = (TextView) findViewById(R.id.txtplayer1);
         txtPlayer2 = (TextView) findViewById(R.id.txtplayer2);
         txtPlayer3 = (TextView) findViewById(R.id.txtplayer3);
@@ -76,10 +86,13 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
         txtPoints7 = (TextView) findViewById(R.id.txtPoints7);
         txtPoints8 = (TextView) findViewById(R.id.txtPoints8);
 
+         */
+
         txtPartner1 = (TextView) findViewById(R.id.txtPartner1);
         txtPartner2 = (TextView) findViewById(R.id.txtPartner2);
         txtPartner3 = (TextView) findViewById(R.id.txtPartner3);
 
+        /*
         txtPlayer1.setVisibility(View.INVISIBLE);
         txtPlayer2.setVisibility(View.INVISIBLE);
         txtPlayer3.setVisibility(View.INVISIBLE);
@@ -98,6 +111,8 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
         txtPoints7.setVisibility(View.INVISIBLE);
         txtPoints8.setVisibility(View.INVISIBLE);
 
+         */
+
         txtPartner1.setVisibility(View.INVISIBLE);
         txtPartner2.setVisibility(View.INVISIBLE);
         txtPartner3.setVisibility(View.INVISIBLE);
@@ -107,7 +122,9 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
         dropdownPartners = (MultiSelectionSpinner) findViewById(R.id.dropParteners);
 
         ArrayList<Player> arrayOfPlayers = new ArrayList<Player>();
-        //PlayerAdapter adapter = new PlayerAdapter(this, arrayOfPlayers);
+        PlayerAdapter adapter = new PlayerAdapter(this, arrayOfPlayers);
+
+
         //NachoTextView nachoTextView = findViewById(R.id.dropParteners);
         //create a list of items for the spinner.
 
@@ -120,11 +137,30 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
 
         Cursor c = db.selectData();
 
-        Log.e("TAG", String.valueOf(c));
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, c, from, to, 0);
+        if (c.getCount() > 0) {
+            items = new ArrayList<String>();
+            //c.moveToFirst();
+            //c.moveToPosition(-1);
+            while (c.moveToNext()) {
+
+                id = c.getString(c.getColumnIndex("_id"));
+                Players = c.getString(c.getColumnIndex("PlayerName"));
+                points = c.getInt(c.getColumnIndex("Points"));
+                //Log.e("TAG", Players);
+                items.add(Players);
+
+                listView.setAdapter(adapter);
+                Player Player1 = new Player(id, Players, points);
+                adapter.add(Player1);
+
+            }
+        }
+
+        //Log.e("TAG", String.valueOf(c));
+        SimpleCursorAdapter sAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, c, from, to, 0);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dropdown.setAdapter(adapter);
+        dropdown.setAdapter(sAdapter);
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -139,20 +175,12 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
-        if (c.getCount() > 0) {
-            items = new ArrayList<String>();
-           // c.moveToFirst();
-            c.moveToPosition(-1);
-            while (c.moveToNext()) {
-                String Players = c.getString(c.getColumnIndex("PlayerName"));
-                Log.e("TAG", Players);
-                items.add(Players);
-            }
-        }
 
         dropdownPartners._items = items.toArray(new String[]{String.valueOf(items)});
         Log.e("Partners", Arrays.toString(dropdownPartners._items));
         dropdownPartners.mSelection = new boolean[]{false, false, false, false, false, false, false, false};
+
+        //c.close();
 
         //Toast.makeText(MainActivity2.this, "Name= " + , Toast.LENGTH_LONG).show();
         //dropdownPartners.setAdapter(adapter);
@@ -308,7 +336,7 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
         btnWon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                won();
+                wonn();
                 partner1 = null;
                 partner2 = null;
                 partner3 = null;
@@ -330,6 +358,20 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
                 CaptainName = null;
             }
         });
+
+    }
+
+    public void wonn() {
+
+        //Cursor c1 = db.selectPlayerData();
+        bid = Integer.parseInt(String.valueOf(edtBidAmount.getText()));
+        CaptainName = String.valueOf(txtCaptainNameText.getText());
+        Integer P = player.getPoints();
+        P = P + 2 * bid;
+
+        Log.e("TAG", String.valueOf(P));
+        boolean b1 = db.updatePlayerData(CaptainName, P);
+
 
     }
 
@@ -1762,8 +1804,9 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
+
     public class dbHelper extends SQLiteOpenHelper {
-        public static final String Databasename = "kali1.db";
+        public static final String Databasename = "kali2.db";
 
         public dbHelper(Context context) {
             super(context, Databasename, null, 1);
@@ -1782,13 +1825,27 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
 
         public Cursor selectData() {
 
-
             SQLiteDatabase db = this.getWritableDatabase();
-            Cursor c = db.rawQuery("select Id as _id, PlayerName from player", null);
+            Cursor c = db.rawQuery("select id as _id, PlayerName, Points from player", null);
             //c.moveToFirst();
             Log.e("TAG2", String.valueOf(c));
-
             return c;
         }
+
+        public Cursor selectPlayerData() {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor c1 = db.rawQuery("select * from player where id = '" + id + "'", null);
+            return c1;
+        }
+
+        public boolean updatePlayerData(String playerName, int points) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+            String updateQ = "update player set Points='" + points + "',where PlayerName='" + playerName + "'";
+            db.execSQL(updateQ);
+            return true;
+        }
+
+
     }
 }
