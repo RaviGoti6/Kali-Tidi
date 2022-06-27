@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 txtPlayercount.setText(String.valueOf(position + 1));
                 edtPlayer1.setVisibility(View.VISIBLE);
                 edtPlayer2.setVisibility(View.VISIBLE);
-                edtPlayer3.setVisibility(View.VISIBLE);
+                edtPlayer3.setVisibility(View.VISIBLE); 
                 Toast.makeText(this, "3 players selected", Toast.LENGTH_SHORT).show();
                 Log.e("Players", "onItemSelected: 3");
                 break;
