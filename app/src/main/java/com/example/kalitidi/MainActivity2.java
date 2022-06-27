@@ -43,11 +43,12 @@ public class MainActivity2 extends AppCompatActivity {
     //String[] items;
     ArrayList<String> items;
     Player player;
+    ApplicationManager applicationManager;
 
     int bid;
     String CaptainName;
     EditText edtBidAmount;
-    Button btnWon, btnLoss;
+    Button btnWon, btnLoss, btnNewGame;
     MultiSelectionSpinner dropdownPartners;
     dbHelper db;
 
@@ -59,10 +60,12 @@ public class MainActivity2 extends AppCompatActivity {
         txtCaptainNameText = (TextView) findViewById(R.id.txtCaptainNameText);
         btnWon = (Button) findViewById(R.id.btnWon);
         btnLoss = (Button) findViewById(R.id.btnLoss);
+        btnNewGame = (Button) findViewById(R.id.btnNewGame);
 
         ListView listView = (ListView) findViewById(R.id.lvPlayer);
 
         db = new dbHelper(this);
+        applicationManager = new ApplicationManager(getApplicationContext());
 
         edtBidAmount = (EditText) findViewById(R.id.edtBidAmount);
 
@@ -367,6 +370,17 @@ public class MainActivity2 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.deleteAll();
+                Intent i = new Intent(MainActivity2.this, MainActivity.class);
+                applicationManager.SetSession("");
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void wonn() {
@@ -487,20 +501,26 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     public class dbHelper extends SQLiteOpenHelper {
-        public static final String Databasename = "kali2.db";
+       // public static final String Databasename = "kali2.db";
+        // Database Name
+        private static final String DATABASE_NAME = "kali3.db";
+
+        // Database Version
+        private static final int DATABASE_VERSION = 1;
 
         public dbHelper(Context context) {
-            super(context, Databasename, null, 1);
+            super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-
+            db.execSQL("create table player(id INTEGER PRIMARY KEY AUTOINCREMENT, PlayerName text, Points text)");
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+            //db.execSQL("DROP TABLE IF EXISTS player");
+            onCreate(db);
         }
 
 
@@ -551,6 +571,17 @@ public class MainActivity2 extends AppCompatActivity {
             String updateQ = "update player set Points='" + points + "' where PlayerName='" + partnerName + "' and id = '" + Id + "'";
             db.execSQL(updateQ);
             return true;
+        }
+
+        public void deleteAll() {
+            SQLiteDatabase db = this.getReadableDatabase();
+           // db.delete("player", null, null);
+            String clearQ = "DROP TABLE IF EXISTS player";
+            //String clearQ = "DELETE from player";
+            db.execSQL(clearQ);
+            db.execSQL("VACUUM");
+            //return true;
+            onCreate(db);
         }
     }
 }

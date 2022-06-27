@@ -29,10 +29,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     dbHelper dh;
     Integer points = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        applicationManager = new ApplicationManager(getApplicationContext());
+
+        if (!applicationManager.GetSession().equals("")) {
+            startActivity(new Intent(MainActivity.this, MainActivity2.class));
+            finish();
+        }
 
         txtPlayercount = (TextView) findViewById(R.id.txtPlayercount);
         edtPlayer1 = (EditText) findViewById(R.id.edtPlayer1);
@@ -55,8 +62,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         edtPlayer8.setVisibility(View.INVISIBLE);
 
         dh = new dbHelper(this);
-        applicationManager = new ApplicationManager(getApplicationContext());
-
 
         //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.players);
@@ -73,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
                 submit();
-
+                applicationManager.SetSession("Game");
             }
         });
 
@@ -163,21 +168,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public static class dbHelper extends SQLiteOpenHelper {
 
-        public static final String Databasename = "kali2.db";
+        //public static final String Databasename = "kali3.db";
+        // Database Name
+        private static final String DATABASE_NAME = "kali3.db";
+
+        // Database Version
+        private static final int DATABASE_VERSION = 1;
 
         public dbHelper(Context context) {
-            super(context, Databasename, null, 1);
+            super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("create table player(id INTEGER PRIMARY KEY AUTOINCREMENT, PlayerName text, Points text)");
-
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+            db.execSQL("DROP TABLE IF EXISTS player");
+            onCreate(db);
         }
 
         public boolean insertData(String PlayerName, int Points) {
@@ -267,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //i.putExtra("Player8", player8Name);
 
         startActivity(i);
+        finish();
     }
 
 
