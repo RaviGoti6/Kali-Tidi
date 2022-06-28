@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String[] items = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, items);
         //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(this);
@@ -91,19 +91,37 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case 0:
                 txtPlayercount.setText(String.valueOf(position + 1));
                 edtPlayer1.setVisibility(View.VISIBLE);
+                edtPlayer2.setVisibility(View.INVISIBLE);
+                edtPlayer3.setVisibility(View.INVISIBLE);
+                edtPlayer4.setVisibility(View.INVISIBLE);
+                edtPlayer5.setVisibility(View.INVISIBLE);
+                edtPlayer6.setVisibility(View.INVISIBLE);
+                edtPlayer7.setVisibility(View.INVISIBLE);
+                edtPlayer8.setVisibility(View.INVISIBLE);
                 Toast.makeText(this, "1 player selected", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
                 txtPlayercount.setText(String.valueOf(position + 1));
                 edtPlayer1.setVisibility(View.VISIBLE);
                 edtPlayer2.setVisibility(View.VISIBLE);
+                edtPlayer3.setVisibility(View.INVISIBLE);
+                edtPlayer4.setVisibility(View.INVISIBLE);
+                edtPlayer5.setVisibility(View.INVISIBLE);
+                edtPlayer6.setVisibility(View.INVISIBLE);
+                edtPlayer7.setVisibility(View.INVISIBLE);
+                edtPlayer8.setVisibility(View.INVISIBLE);
                 Toast.makeText(this, "2 players selected", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
                 txtPlayercount.setText(String.valueOf(position + 1));
                 edtPlayer1.setVisibility(View.VISIBLE);
                 edtPlayer2.setVisibility(View.VISIBLE);
-                edtPlayer3.setVisibility(View.VISIBLE); 
+                edtPlayer3.setVisibility(View.VISIBLE);
+                edtPlayer4.setVisibility(View.INVISIBLE);
+                edtPlayer5.setVisibility(View.INVISIBLE);
+                edtPlayer6.setVisibility(View.INVISIBLE);
+                edtPlayer7.setVisibility(View.INVISIBLE);
+                edtPlayer8.setVisibility(View.INVISIBLE);
                 Toast.makeText(this, "3 players selected", Toast.LENGTH_SHORT).show();
                 Log.e("Players", "onItemSelected: 3");
                 break;
@@ -113,6 +131,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer2.setVisibility(View.VISIBLE);
                 edtPlayer3.setVisibility(View.VISIBLE);
                 edtPlayer4.setVisibility(View.VISIBLE);
+                edtPlayer5.setVisibility(View.INVISIBLE);
+                edtPlayer6.setVisibility(View.INVISIBLE);
+                edtPlayer7.setVisibility(View.INVISIBLE);
+                edtPlayer8.setVisibility(View.INVISIBLE);
                 Toast.makeText(this, "4 players selected", Toast.LENGTH_SHORT).show();
                 break;
             case 4:
@@ -122,6 +144,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer3.setVisibility(View.VISIBLE);
                 edtPlayer4.setVisibility(View.VISIBLE);
                 edtPlayer5.setVisibility(View.VISIBLE);
+                edtPlayer6.setVisibility(View.INVISIBLE);
+                edtPlayer7.setVisibility(View.INVISIBLE);
+                edtPlayer8.setVisibility(View.INVISIBLE);
                 Toast.makeText(this, "5 players selected", Toast.LENGTH_SHORT).show();
                 break;
             case 5:
@@ -132,6 +157,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer4.setVisibility(View.VISIBLE);
                 edtPlayer5.setVisibility(View.VISIBLE);
                 edtPlayer6.setVisibility(View.VISIBLE);
+                edtPlayer7.setVisibility(View.INVISIBLE);
+                edtPlayer8.setVisibility(View.INVISIBLE);
                 Toast.makeText(this, "6 players selected", Toast.LENGTH_SHORT).show();
                 break;
             case 6:
@@ -143,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer5.setVisibility(View.VISIBLE);
                 edtPlayer6.setVisibility(View.VISIBLE);
                 edtPlayer7.setVisibility(View.VISIBLE);
+                edtPlayer8.setVisibility(View.INVISIBLE);
                 Toast.makeText(this, "7 players selected", Toast.LENGTH_SHORT).show();
                 break;
             case 7:

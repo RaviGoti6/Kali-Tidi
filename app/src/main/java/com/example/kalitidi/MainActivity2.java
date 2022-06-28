@@ -10,6 +10,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -163,7 +165,22 @@ public class MainActivity2 extends AppCompatActivity {
         //Log.e("TAG", String.valueOf(c));
         SimpleCursorAdapter sAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, c, from, to, 0);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+
+                if (columnIndex == 1) {
+                    String desc = cursor.getString(columnIndex);
+                    TextView textView = (TextView) view;
+                    //textView.setPadding(10,10,10,10);
+                    textView.setTextSize(20);
+                    textView.setText(desc);
+                    return true;
+                }
+                return false;
+            }
+        });
         dropdown.setAdapter(sAdapter);
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -307,7 +324,7 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String s = dropdownPartners.getSelectedItemsAsString();
-                String[] partners = s.split(",[ ]*");
+                String[] partners = s.split(" ,[  ]*");
                 Log.e("TAG", Arrays.toString(partners));
 
                 if (partners.length == 1) {
@@ -501,7 +518,7 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     public class dbHelper extends SQLiteOpenHelper {
-       // public static final String Databasename = "kali2.db";
+        // public static final String Databasename = "kali2.db";
         // Database Name
         private static final String DATABASE_NAME = "kali3.db";
 
@@ -575,7 +592,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         public void deleteAll() {
             SQLiteDatabase db = this.getReadableDatabase();
-           // db.delete("player", null, null);
+            // db.delete("player", null, null);
             String clearQ = "DROP TABLE IF EXISTS player";
             //String clearQ = "DELETE from player";
             db.execSQL(clearQ);

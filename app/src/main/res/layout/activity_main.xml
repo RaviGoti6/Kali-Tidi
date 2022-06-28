@@ -11,7 +11,8 @@
         android:id="@+id/players"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
+        android:background="@drawable/blue_outline"
+        android:popupBackground="@drawable/blue_outline_white_background"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,11 +41,11 @@
         android:id="@+id/edtPlayer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="5dp"
         android:hint="Enter Player1 Name"
-        app:layout_constraintTop_toBottomOf="@+id/txtPlayercounttext"
-        android:inputType="text" />
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPlayercounttext" />
 
     <EditText
         android:id="@+id/edtPlayer2"
@@ -61,9 +62,9 @@
         android:id="@+id/edtPlayer3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:hint="Enter Player3 Name"
         android:inputType="text"
-        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPlayer1" />
 
@@ -71,9 +72,9 @@
         android:id="@+id/edtPlayer4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:hint="Enter Player4 Name"
         android:inputType="text"
-        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/edtPlayer3"
         app:layout_constraintTop_toBottomOf="@+id/edtPlayer2" />
@@ -82,9 +83,9 @@
         android:id="@+id/edtPlayer5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:hint="Enter Player5 Name"
         android:inputType="text"
-        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPlayer3" />
 
@@ -92,9 +93,9 @@
         android:id="@+id/edtPlayer6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:hint="Enter Player6 Name"
         android:inputType="text"
-        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/edtPlayer5"
         app:layout_constraintTop_toBottomOf="@+id/edtPlayer4" />
@@ -103,9 +104,9 @@
         android:id="@+id/edtPlayer7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:hint="Enter Player7 Name"
         android:inputType="text"
-        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPlayer5" />
 
@@ -113,9 +114,9 @@
         android:id="@+id/edtPlayer8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:hint="Enter Player8 Name"
         android:inputType="text"
-        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/edtPlayer7"
         app:layout_constraintTop_toBottomOf="@+id/edtPlayer6" />
