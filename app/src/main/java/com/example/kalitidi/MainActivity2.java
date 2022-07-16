@@ -1,10 +1,12 @@
 package com.example.kalitidi;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -324,8 +326,8 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String s = dropdownPartners.getSelectedItemsAsString();
-                String[] partners = s.split(" ,[  ]*");
-                Log.e("TAG", Arrays.toString(partners));
+                String[] partners = s.split(",[  ]*");
+                Log.e("TAGP", Arrays.toString(partners));
 
                 if (partners.length == 1) {
                     partner1 = partners[0];
@@ -391,11 +393,32 @@ public class MainActivity2 extends AppCompatActivity {
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.deleteAll();
-                Intent i = new Intent(MainActivity2.this, MainActivity.class);
-                applicationManager.SetSession("");
-                startActivity(i);
-                finish();
+
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                //Yes button clicked
+                                db.deleteAll();
+                                Intent i = new Intent(MainActivity2.this, MainActivity.class);
+                                applicationManager.SetSession("");
+                                startActivity(i);
+                                finish();
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity2.this);
+                builder.setTitle("Confirm");
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
             }
         });
     }
