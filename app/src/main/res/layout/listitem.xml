@@ -21,7 +21,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="invisible"
             android:text="Id"
+            android:textSize="0dp"/>
+
+        <TextView
+            android:id="@+id/txtNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="1"
             android:textSize="20dp"/>
 
         <TextView

@@ -30,6 +30,8 @@ import com.hootsuite.nachos.NachoTextView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity {
@@ -133,6 +135,16 @@ public class MainActivity2 extends AppCompatActivity {
         PlayerAdapter adapter = new PlayerAdapter(this, arrayOfPlayers);
 
 
+        /*
+        items = new ArrayList<String>(Arrays.asList(arrayOfPlayers));
+        Collections.sort(items);
+
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, items);
+        listView.setAdapter(adapter);
+*/
+
+
         //NachoTextView nachoTextView = findViewById(R.id.dropParteners);
         //create a list of items for the spinner.
 
@@ -157,6 +169,8 @@ public class MainActivity2 extends AppCompatActivity {
                 //Log.e("TAG", Players);
                 items.add(Players);
 
+
+                //adapter.notifyDataSetChanged();
                 listView.setAdapter(adapter);
                 Player Player1 = new Player(id, Players, points);
                 adapter.add(Player1);
@@ -164,6 +178,12 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
 
+        Collections.sort(arrayOfPlayers, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o2.Points.compareTo(o1.Points);
+            }
+        });
         //Log.e("TAG", String.valueOf(c));
         SimpleCursorAdapter sAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, c, from, to, 0);
 

@@ -44,10 +44,12 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         TextView txtId = (TextView) convertView.findViewById(R.id.txtId);
         TextView txtPlayer = (TextView) convertView.findViewById(R.id.txtplayer);
         TextView txtxPoints = (TextView) convertView.findViewById(R.id.txtPoints);
+        TextView txtNum = (TextView) convertView.findViewById(R.id.txtNum);
 
         txtId.setText(player.Id);
         txtPlayer.setText(player.PlayerName);
         txtxPoints.setText(String.valueOf(player.Points));
+        txtNum.setText(String.valueOf(position+1));
 
         lnly.setOnClickListener(new View.OnClickListener() {
             @Override
