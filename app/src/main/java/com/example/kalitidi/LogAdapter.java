@@ -35,8 +35,8 @@ public class LogAdapter extends ArrayAdapter<Logg> {
         TextView txtLog = (TextView) convertView.findViewById(R.id.txtLplayer);
 
 
-        txtId.setText(Logg.Id);
-        txtLog.setText(Logg.Logg);
+        txtId.setText(logg.Id);
+        txtLog.setText(logg.Logg);
 
 
         return convertView;

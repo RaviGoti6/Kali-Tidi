@@ -1,8 +1,9 @@
 package com.example.kalitidi;
 
 public class Logg {
-    public static String Id;
-    public static String Logg;
+    public String Id;
+    public String Logg;
+
 
     public Logg(String Id, String Logg) {
         this.Id = Id;

@@ -50,13 +50,14 @@ public class MainActivity2 extends AppCompatActivity {
     //String[] items;
     ArrayList<String> items;
     ArrayList<String> LP;
+    ArrayList<String> LPPrint;
     Player player;
     ApplicationManager applicationManager;
 
     int bid;
     String CaptainName, LCaptainName;
     EditText edtBidAmount;
-    Button btnWon, btnLoss, btnNewGame, btnLog;
+    Button btnWon, btnLoss, btnNewGame;
     MultiSelectionSpinner dropdownPartners;
     dbHelper db;
 
@@ -69,7 +70,6 @@ public class MainActivity2 extends AppCompatActivity {
         btnWon = (Button) findViewById(R.id.btnWon);
         btnLoss = (Button) findViewById(R.id.btnLoss);
         btnNewGame = (Button) findViewById(R.id.btnNewGame);
-        btnLog = (Button) findViewById(R.id.btnLog);
 
         ListView listView = (ListView) findViewById(R.id.lvPlayer);
         ListView listViewLog = (ListView) findViewById(R.id.lvLog);
@@ -187,20 +187,19 @@ public class MainActivity2 extends AppCompatActivity {
         Cursor clog = db.selectLog();
 
         if (clog.getCount() > 0) {
-            LP = new ArrayList<String>();
+            LPPrint = new ArrayList<String>();
             //c.moveToFirst();
             //c.moveToPosition(-1);
             while (clog.moveToNext()) {
-
                 id = clog.getString(clog.getColumnIndex("_id"));
                 log = clog.getString(clog.getColumnIndex("Logg"));
                 //Logg.e("TAG", Players);
-                LP.add(log);
+                LPPrint.add(log);
 
                 //adapter.notifyDataSetChanged();
                 listViewLog.setAdapter(ladapter);
-                Logg Logg = new Logg(id, log);
-                ladapter.add(Logg);
+                Logg logg = new Logg(id, log);
+                ladapter.add(logg);
 
             }
         }
