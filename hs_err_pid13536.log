@@ -124,7 +124,7 @@ Java Threads: ( => current thread )
   0x000001caf2131800 JavaThread "Handler for socket connection from /127.0.0.1:58580 to /127.0.0.1:58581" [_thread_in_native, id=13868, stack(0x000000adf4000000,0x000000adf4100000)]
   0x000001caf16b4000 JavaThread "Cancel handler" [_thread_blocked, id=14588, stack(0x000000adf4100000,0x000000adf4200000)]
   0x000001caf169d000 JavaThread "Daemon worker" [_thread_in_Java, id=32344, stack(0x000000adf4200000,0x000000adf4300000)]
-  0x000001caf168e800 JavaThread "Asynchronous log dispatcher for DefaultDaemonConnection: socket connection from /127.0.0.1:58580 to /127.0.0.1:58581" [_thread_blocked, id=12388, stack(0x000000adf4300000,0x000000adf4400000)]
+  0x000001caf168e800 JavaThread "Asynchronous logg dispatcher for DefaultDaemonConnection: socket connection from /127.0.0.1:58580 to /127.0.0.1:58581" [_thread_blocked, id=12388, stack(0x000000adf4300000,0x000000adf4400000)]
   0x000001caf1c23800 JavaThread "Stdin handler" [_thread_blocked, id=5004, stack(0x000000adf4400000,0x000000adf4500000)]
   0x000001caf144e800 JavaThread "Thread-8" [_thread_blocked, id=30976, stack(0x000000adf4500000,0x000000adf4600000)]
   0x000001caf1a9b000 JavaThread "Cache worker for file hash cache (C:\Users\ravig\.gradle\caches\6.7.1\fileHashes)" [_thread_blocked, id=16684, stack(0x000000adf4700000,0x000000adf4800000)]
@@ -997,7 +997,7 @@ Launcher Type: SUN_STANDARD
      bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
 
 Logging:
-Log output configuration:
+Logg output configuration:
  #0: stdout all=warning uptime,level,tags
  #1: stderr all=off uptime,level,tags
 

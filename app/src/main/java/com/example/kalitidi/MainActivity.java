@@ -210,11 +210,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("create table player(id INTEGER PRIMARY KEY AUTOINCREMENT, PlayerName text, Points text)");
+            db.execSQL("create table log(id INTEGER PRIMARY KEY AUTOINCREMENT, Logg text)");
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("DROP TABLE IF EXISTS player");
+            db.execSQL("DROP TABLE IF EXISTS log");
             onCreate(db);
         }
 
@@ -247,14 +249,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         player7Name = String.valueOf(edtPlayer7.getText());
         player8Name = String.valueOf(edtPlayer8.getText());
 
-        /*Log.d("player1", player1Name);
-        Log.d("player2", player2Name);
-        Log.d("player3", player3Name);
-        Log.d("player4", player4Name);
-        Log.d("player5", player5Name);
-        Log.d("player6", player6Name);
-        Log.d("player7", player7Name);
-        Log.d("player8", player8Name);*/
+        /*Logg.d("player1", player1Name);
+        Logg.d("player2", player2Name);
+        Logg.d("player3", player3Name);
+        Logg.d("player4", player4Name);
+        Logg.d("player5", player5Name);
+        Logg.d("player6", player6Name);
+        Logg.d("player7", player7Name);
+        Logg.d("player8", player8Name);*/
 
         boolean result, result1, result2, result3, result4, result5, result6, result7;
 

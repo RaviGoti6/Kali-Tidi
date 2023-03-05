@@ -42,19 +42,21 @@ public class MainActivity2 extends AppCompatActivity {
     TextView txtPartner1, txtPartner2, txtPartner3;
     String player1 = "", player2 = "", player3 = "", player4 = "", player5 = "", player6 = "", player7 = "", player8 = "";
     int points1 = 0, points2 = 0, points3 = 0, points4 = 0, points5 = 0, points6 = 0, points7 = 0, points8 = 0;
-    String partner1, partner2, partner3;
-    String id, Players;
+    String partner1, partner2, partner3, Lpartner1, Lpartner2, Lpartner3;
+    String id, Players, log;
     long iid;
     Integer points;
+    Integer totalPartners;
     //String[] items;
     ArrayList<String> items;
+    ArrayList<String> LP;
     Player player;
     ApplicationManager applicationManager;
 
     int bid;
-    String CaptainName;
+    String CaptainName, LCaptainName;
     EditText edtBidAmount;
-    Button btnWon, btnLoss, btnNewGame;
+    Button btnWon, btnLoss, btnNewGame, btnLog;
     MultiSelectionSpinner dropdownPartners;
     dbHelper db;
 
@@ -67,8 +69,10 @@ public class MainActivity2 extends AppCompatActivity {
         btnWon = (Button) findViewById(R.id.btnWon);
         btnLoss = (Button) findViewById(R.id.btnLoss);
         btnNewGame = (Button) findViewById(R.id.btnNewGame);
+        btnLog = (Button) findViewById(R.id.btnLog);
 
         ListView listView = (ListView) findViewById(R.id.lvPlayer);
+        ListView listViewLog = (ListView) findViewById(R.id.lvLog);
 
         db = new dbHelper(this);
         applicationManager = new ApplicationManager(getApplicationContext());
@@ -133,6 +137,8 @@ public class MainActivity2 extends AppCompatActivity {
 
         ArrayList<Player> arrayOfPlayers = new ArrayList<Player>();
         PlayerAdapter adapter = new PlayerAdapter(this, arrayOfPlayers);
+        ArrayList<Logg> arrayOfLogs = new ArrayList<Logg>();
+        LogAdapter ladapter = new LogAdapter(this, arrayOfLogs);
 
 
         /*
@@ -166,7 +172,7 @@ public class MainActivity2 extends AppCompatActivity {
                 id = c.getString(c.getColumnIndex("_id"));
                 Players = c.getString(c.getColumnIndex("PlayerName"));
                 points = c.getInt(c.getColumnIndex("Points"));
-                //Log.e("TAG", Players);
+                //Logg.e("TAG", Players);
                 items.add(Players);
 
 
@@ -178,13 +184,34 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
 
+        Cursor clog = db.selectLog();
+
+        if (clog.getCount() > 0) {
+            LP = new ArrayList<String>();
+            //c.moveToFirst();
+            //c.moveToPosition(-1);
+            while (clog.moveToNext()) {
+
+                id = clog.getString(clog.getColumnIndex("_id"));
+                log = clog.getString(clog.getColumnIndex("Logg"));
+                //Logg.e("TAG", Players);
+                LP.add(log);
+
+                //adapter.notifyDataSetChanged();
+                listViewLog.setAdapter(ladapter);
+                Logg Logg = new Logg(id, log);
+                ladapter.add(Logg);
+
+            }
+        }
+
         Collections.sort(arrayOfPlayers, new Comparator<Player>() {
             @Override
             public int compare(Player o1, Player o2) {
                 return o2.Points.compareTo(o1.Points);
             }
         });
-        //Log.e("TAG", String.valueOf(c));
+        //Logg.e("TAG", String.valueOf(c));
         SimpleCursorAdapter sAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, c, from, to, 0);
 
         sAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -270,7 +297,7 @@ public class MainActivity2 extends AppCompatActivity {
             player8 = (String) b.get("Player8");
 
             //Toast.makeText(this, player2, Toast.LENGTH_SHORT).show();
-            //Log.d("player2", player2);
+            //Logg.d("player2", player2);
         }
 
 
@@ -353,6 +380,7 @@ public class MainActivity2 extends AppCompatActivity {
                     partner1 = partners[0];
                     txtPartner1.setVisibility(View.VISIBLE);
                     txtPartner1.setText(partner1);
+                    totalPartners = 1;
                 } else if (partners.length == 2) {
                     partner1 = partners[0];
                     partner2 = partners[1];
@@ -360,6 +388,7 @@ public class MainActivity2 extends AppCompatActivity {
                     txtPartner2.setVisibility(View.VISIBLE);
                     txtPartner1.setText(partner1);
                     txtPartner2.setText(partner2);
+                    totalPartners = 2;
                 } else if (partners.length == 3) {
                     partner1 = partners[0];
                     partner2 = partners[1];
@@ -370,6 +399,7 @@ public class MainActivity2 extends AppCompatActivity {
                     txtPartner1.setText(partner1);
                     txtPartner2.setText(partner2);
                     txtPartner3.setText(partner3);
+                    totalPartners = 3;
                 } else {
                     Toast.makeText(MainActivity2.this, "Maximum 3 Partners", Toast.LENGTH_SHORT).show();
                 }
@@ -445,6 +475,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     public void wonn() {
         //Cursor c1 = db.selectPlayerData();
+        LP = new ArrayList<String>();
         bid = Integer.parseInt(String.valueOf(edtBidAmount.getText()));
         CaptainName = String.valueOf(txtCaptainNameText.getText());
 
@@ -463,10 +494,14 @@ public class MainActivity2 extends AppCompatActivity {
             //Integer P = player.getPoints();
             points = points + 2 * bid;
             // player.setPoints(points);
-            Log.e("c1", String.valueOf(points));
+            //Logg.e("c1", String.valueOf(points));
             boolean b1 = db.updatePlayerData(String.valueOf(iid), CaptainName, points);
             if (b1 == true) {
                 Toast.makeText(MainActivity2.this, "Data Updated....", Toast.LENGTH_SHORT).show();
+                //Logg.e("Captain Name and Point:", String.valueOf(CaptainName + ", " + (2 * bid)));
+                LCaptainName = String.valueOf(CaptainName + ": " + (2 * bid));
+                //Logg.e("LCapatinName:", String.valueOf(LCaptainName));
+                LP.add(LCaptainName);
             }
 
         }
@@ -479,10 +514,14 @@ public class MainActivity2 extends AppCompatActivity {
                 points = cp1.getInt(cp1.getColumnIndex("Points"));
             }
             points = points + bid;
-            Log.e("cp1", String.valueOf(points));
+            //Logg.e("cp1", String.valueOf(points));
             boolean b1 = db.updatePartnerData(id, partner1, points);
             if (b1 == true) {
                 Toast.makeText(MainActivity2.this, "Data Updated....", Toast.LENGTH_SHORT).show();
+                //Logg.e("Partner1 and Point:", String.valueOf(partner1 + ", " + bid));
+                Lpartner1 = String.valueOf(partner1 + ": " + bid);
+                //Logg.e("LP1:",Lpartner1);
+                LP.add(Lpartner1);
             }
         }
 
@@ -494,10 +533,14 @@ public class MainActivity2 extends AppCompatActivity {
                 points = cp2.getInt(cp2.getColumnIndex("Points"));
             }
             points = points + bid;
-            Log.e("cp2", String.valueOf(points));
+            //Logg.e("cp2", String.valueOf(points));
             boolean b1 = db.updatePartnerData(id, partner2, points);
             if (b1 == true) {
                 Toast.makeText(MainActivity2.this, "Data Updated....", Toast.LENGTH_SHORT).show();
+                //Logg.e("Partner2 and Point:", String.valueOf(partner2 + ", " + bid));
+                Lpartner2 = String.valueOf(partner2 + ": " + bid);
+                //Logg.e("LP2:" , Lpartner2);
+                LP.add(Lpartner2);
             }
         }
 
@@ -509,15 +552,22 @@ public class MainActivity2 extends AppCompatActivity {
                 points = cp3.getInt(cp3.getColumnIndex("Points"));
             }
             points = points + bid;
-            Log.e("cp3", String.valueOf(points));
+            //Logg.e("cp3", String.valueOf(points));
             boolean b1 = db.updatePartnerData(id, partner3, points);
             if (b1 == true) {
                 Toast.makeText(MainActivity2.this, "Data Updated....", Toast.LENGTH_SHORT).show();
+                //Logg.e("Partner3 and Point:", String.valueOf(partner3 + ", " + bid));
+                Lpartner3 = String.valueOf(partner3+ ": " + bid);
+                //Logg.e("LP3:", Lpartner3);
+                LP.add(Lpartner3);
             }
         }
+        Log.e("Lplayers:", String.valueOf(LP));
+        db.insertData(String.valueOf(LP));
     }
 
     public void losss() {
+        LP = new ArrayList<String>();
         //Cursor c1 = db.selectPlayerData();
         bid = Integer.parseInt(String.valueOf(edtBidAmount.getText()));
         CaptainName = String.valueOf(txtCaptainNameText.getText());
@@ -531,10 +581,14 @@ public class MainActivity2 extends AppCompatActivity {
             //Integer P = player.getPoints();
             points = points - bid;
             // player.setPoints(points);
-            Log.e("TAG", String.valueOf(points));
+            //Logg.e("TAG", String.valueOf(points));
             boolean b1 = db.updatePlayerData(String.valueOf(iid), CaptainName, points);
             if (b1 == true) {
                 Toast.makeText(MainActivity2.this, "Data Updated....", Toast.LENGTH_SHORT).show();
+                //Logg.e("CaptainName and Point:", String.valueOf(CaptainName + ", " + (-bid)));
+                LCaptainName = String.valueOf(CaptainName + ": " + (-bid));
+                //Logg.e("LCaptaionName:", LCaptainName);
+                LP.add(LCaptainName);
             }
         }
 
@@ -549,15 +603,20 @@ public class MainActivity2 extends AppCompatActivity {
                     if (!Players.equals(partner1)) {
                         if (!Players.equals(partner2)) {
                             if (!Players.equals(partner3)) {
-                                Log.e("c", String.valueOf(points));
+                                //Logg.e("c", String.valueOf(points));
                                 points = points + bid;
                                 boolean b1 = db.updatePlayerData(id, Players, points);
+                                //Logg.e("Players and Point:", String.valueOf(Players + ", " + bid));
+                                String LPlayers = String.valueOf(Players + ": " + bid);
+                                LP.add(LPlayers);
                             }
                         }
                     }
                 }
             }
         }
+        Log.e("Lplayers:", String.valueOf(LP));
+        db.insertData(String.valueOf(LP));
     }
 
     public class dbHelper extends SQLiteOpenHelper {
@@ -591,6 +650,14 @@ public class MainActivity2 extends AppCompatActivity {
             //c.moveToFirst();
             Log.e("TAG2", String.valueOf(c));
             return c;
+        }
+
+        public Cursor selectLog() {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor clog = db.rawQuery("select id as _id, logg from log", null);
+            //c.moveToFirst();
+            Log.e("TAG2", String.valueOf(clog));
+            return clog;
         }
 
         public Cursor selectPlayerData() {
@@ -642,6 +709,20 @@ public class MainActivity2 extends AppCompatActivity {
             db.execSQL("VACUUM");
             //return true;
             onCreate(db);
+        }
+
+        public boolean insertData(String Log) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+            cv.put("Logg", Log);
+
+            long rs = db.insert("log", null, cv);
+            if (rs == -1) {
+                return false;
+            } else {
+                return true;
+            }
+
         }
     }
 }

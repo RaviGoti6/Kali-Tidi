@@ -1190,7 +1190,7 @@ instanceKlass kotlin/io/TextStreamsKt
 instanceKlass kotlin/text/Charsets
 instanceKlass com/android/tools/build/jetifier/core/utils/StdOutLogConsumer
 instanceKlass com/android/tools/build/jetifier/core/utils/LogConsumer
-instanceKlass com/android/tools/build/jetifier/core/utils/Log
+instanceKlass com/android/tools/build/jetifier/core/utils/Logg
 instanceKlass com/android/tools/build/jetifier/core/config/ConfigParser
 instanceKlass com/android/tools/build/jetifier/processor/Processor$Companion
 instanceKlass com/android/tools/build/jetifier/processor/Processor
@@ -2777,7 +2777,7 @@ instanceKlass org/gradle/internal/resource/transport/http/HttpResourceAccessor
 instanceKlass org/slf4j/spi/LocationAwareLogger
 instanceKlass org/apache/commons/logging/impl/SLF4JLog
 instanceKlass org/apache/commons/logging/impl/SLF4JLocationAwareLog
-instanceKlass org/apache/commons/logging/Log
+instanceKlass org/apache/commons/logging/Logg
 instanceKlass org/apache/commons/logging/LogFactory
 instanceKlass org/apache/http/conn/ssl/DefaultHostnameVerifier
 instanceKlass org/gradle/internal/resource/transport/http/DefaultHttpSettings$Builder
