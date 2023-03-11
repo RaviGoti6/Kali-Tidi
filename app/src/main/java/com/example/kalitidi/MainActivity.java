@@ -24,10 +24,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     TextView txtPlayercount;
     EditText edtPlayer1, edtPlayer2, edtPlayer3, edtPlayer4, edtPlayer5, edtPlayer6, edtPlayer7, edtPlayer8;
     Button btnNext;
-    String player1Name = null, player2Name = null, player3Name = null, player4Name = null, player5Name = null, player6Name = null, player7Name = null, player8Name = null;
+    String player1Name, player2Name, player3Name, player4Name, player5Name, player6Name, player7Name, player8Name;
+    //String player1Name = null, player2Name = null, player3Name = null, player4Name = null, player5Name = null, player6Name = null, player7Name = null, player8Name = null;
     ApplicationManager applicationManager;
     dbHelper dh;
     Integer points = 0;
+    int flag, count = 0;
 
 
     @Override
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer6.setVisibility(View.INVISIBLE);
                 edtPlayer7.setVisibility(View.INVISIBLE);
                 edtPlayer8.setVisibility(View.INVISIBLE);
+                flag = 1;
                 Toast.makeText(this, "1 player selected", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer6.setVisibility(View.INVISIBLE);
                 edtPlayer7.setVisibility(View.INVISIBLE);
                 edtPlayer8.setVisibility(View.INVISIBLE);
+                flag = 2;
                 Toast.makeText(this, "2 players selected", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
@@ -122,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer6.setVisibility(View.INVISIBLE);
                 edtPlayer7.setVisibility(View.INVISIBLE);
                 edtPlayer8.setVisibility(View.INVISIBLE);
+                flag = 3;
                 Toast.makeText(this, "3 players selected", Toast.LENGTH_SHORT).show();
                 Log.e("Players", "onItemSelected: 3");
                 break;
@@ -135,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer6.setVisibility(View.INVISIBLE);
                 edtPlayer7.setVisibility(View.INVISIBLE);
                 edtPlayer8.setVisibility(View.INVISIBLE);
+                flag = 4;
                 Toast.makeText(this, "4 players selected", Toast.LENGTH_SHORT).show();
                 break;
             case 4:
@@ -147,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer6.setVisibility(View.INVISIBLE);
                 edtPlayer7.setVisibility(View.INVISIBLE);
                 edtPlayer8.setVisibility(View.INVISIBLE);
+                flag = 5;
                 Toast.makeText(this, "5 players selected", Toast.LENGTH_SHORT).show();
                 break;
             case 5:
@@ -159,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer6.setVisibility(View.VISIBLE);
                 edtPlayer7.setVisibility(View.INVISIBLE);
                 edtPlayer8.setVisibility(View.INVISIBLE);
+                flag = 6;
                 Toast.makeText(this, "6 players selected", Toast.LENGTH_SHORT).show();
                 break;
             case 6:
@@ -171,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer6.setVisibility(View.VISIBLE);
                 edtPlayer7.setVisibility(View.VISIBLE);
                 edtPlayer8.setVisibility(View.INVISIBLE);
+                flag = 7;
                 Toast.makeText(this, "7 players selected", Toast.LENGTH_SHORT).show();
                 break;
             case 7:
@@ -183,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtPlayer6.setVisibility(View.VISIBLE);
                 edtPlayer7.setVisibility(View.VISIBLE);
                 edtPlayer8.setVisibility(View.VISIBLE);
+                flag = 8;
                 Toast.makeText(this, "8 players selected", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -258,37 +268,48 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Logg.d("player7", player7Name);
         Logg.d("player8", player8Name);*/
 
-        boolean result, result1, result2, result3, result4, result5, result6, result7;
+        boolean result = false, result1 = false, result2 = false, result3 = false, result4 = false, result5 = false, result6 = false, result7 = false;
 
-        if (!player1Name.equals("")) {
+        if (!player1Name.isEmpty() && count == 0) {
             result = dh.insertData(player1Name, points);
+            count = 1;
         }
-        if (!player2Name.equals("")) {
+        if (!player2Name.isEmpty() && count == 1) {
             result1 = dh.insertData(player2Name, points);
+            count = 2;
         }
-        if (!player3Name.equals("")) {
+        if (!player3Name.isEmpty() && count == 2) {
             result2 = dh.insertData(player3Name, points);
+            count = 3;
         }
-        if (!player4Name.equals("")) {
+        if (!player4Name.isEmpty() && count == 3) {
             result3 = dh.insertData(player4Name, points);
+            count = 4;
         }
-        if (!player5Name.equals("")) {
+        if (!player5Name.isEmpty() && count == 4) {
             result4 = dh.insertData(player5Name, points);
+            count = 5;
         }
-        if (!player6Name.equals("")) {
+        if (!player6Name.isEmpty() && count == 5) {
             result5 = dh.insertData(player6Name, points);
+            count = 6;
         }
-        if (!player7Name.equals("")) {
+        if (!player7Name.isEmpty() && count == 6) {
             result6 = dh.insertData(player7Name, points);
+            count = 7;
         }
-        if (!player8Name.equals("")) {
+        if (!player8Name.isEmpty() && count == 7) {
             result7 = dh.insertData(player8Name, points);
+            count = 8;
         }
 
-        if ((result = true) || (result2 = true) || (result3 = true) || (result4 = true) || (result5 = true) || (result6 = true) || (result7 = true)) {
+        if (((result) || (result1) || (result2) || (result3) || (result4) || (result5) || (result6) || (result7)) && flag == count) {
             Toast.makeText(MainActivity.this, "Data Entered", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MainActivity.this, MainActivity2.class);
+            startActivity(i);
+            finish();
         } else {
-            Toast.makeText(MainActivity.this, "Error Occuerd", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Enter Player Name", Toast.LENGTH_SHORT).show();
         }
      /*else
 
@@ -296,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toast.makeText(MainActivity.this, "Enter Player Name", Toast.LENGTH_SHORT).show();
     }*/
 
-        Intent i = new Intent(MainActivity.this, MainActivity2.class);
+        //   Intent i = new Intent(MainActivity.this, MainActivity2.class);
         // i.putExtra("Player1", player1Name);
         // i.putExtra("Player2", player2Name);
         // i.putExtra("Player3", player3Name);
@@ -306,8 +327,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //i.putExtra("Player7", player7Name);
         //i.putExtra("Player8", player8Name);
 
-        startActivity(i);
-        finish();
+        //  startActivity(i);
+        // finish();
     }
 
 

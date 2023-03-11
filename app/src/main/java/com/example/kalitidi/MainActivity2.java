@@ -173,7 +173,8 @@ public class MainActivity2 extends AppCompatActivity {
                 Players = c.getString(c.getColumnIndex("PlayerName"));
                 points = c.getInt(c.getColumnIndex("Points"));
                 //Logg.e("TAG", Players);
-                items.add(Players);
+                if (!Players.equals(CaptainName))
+                    items.add(Players);
 
 
                 //adapter.notifyDataSetChanged();
@@ -556,7 +557,7 @@ public class MainActivity2 extends AppCompatActivity {
             if (b1 == true) {
                 Toast.makeText(MainActivity2.this, "Data Updated....", Toast.LENGTH_SHORT).show();
                 //Logg.e("Partner3 and Point:", String.valueOf(partner3 + ", " + bid));
-                Lpartner3 = String.valueOf(partner3+ ": " + bid);
+                Lpartner3 = String.valueOf(partner3 + ": " + bid);
                 //Logg.e("LP3:", Lpartner3);
                 LP.add(Lpartner3);
             }
