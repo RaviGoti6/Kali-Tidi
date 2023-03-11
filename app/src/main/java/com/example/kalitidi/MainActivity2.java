@@ -633,6 +633,7 @@ public class MainActivity2 extends AppCompatActivity {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("create table player(id INTEGER PRIMARY KEY AUTOINCREMENT, PlayerName text, Points text)");
+            db.execSQL("create table log(id INTEGER PRIMARY KEY AUTOINCREMENT, Logg text)");
         }
 
         @Override
@@ -703,8 +704,10 @@ public class MainActivity2 extends AppCompatActivity {
             SQLiteDatabase db = this.getReadableDatabase();
             // db.delete("player", null, null);
             String clearQ = "DROP TABLE IF EXISTS player";
+            String clearLog = "DROP TABLE IF EXISTS log";
             //String clearQ = "DELETE from player";
             db.execSQL(clearQ);
+            db.execSQL(clearLog);
             db.execSQL("VACUUM");
             //return true;
             onCreate(db);
@@ -721,7 +724,6 @@ public class MainActivity2 extends AppCompatActivity {
             } else {
                 return true;
             }
-
         }
     }
 }
